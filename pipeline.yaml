@@ -1,0 +1,24 @@
+name: "Backend Developer pipeline"
+description: "Pipeline to install all the required artifacts for developers "
+steps:
+  - install gh:
+    description: "install gh cli"
+    check:
+      operator: "equal to"
+      CompareTo: "1"
+      command: "gh version"
+    setup:
+      - command: brew install --cask  gh
+        onFaliure: "failed to install gh cli"
+
+    teardown:
+      - command: brew uninstall gh
+        onFailure: "failed to uninstall gh cli"
+
+  - install jq:
+    description: "install jq"
+    check:
+      condition:
+        operator: equal to
+        exitCode: 1
+        command: "jq version"
