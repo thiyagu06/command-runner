@@ -18,9 +18,12 @@ dependencies {
     implementation("io.quarkus:quarkus-picocli")
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
     implementation("org.zeroturnaround:zt-exec:1.12")
     implementation("io.quarkus:quarkus-arc")
     testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
 group = "com.thiyagu06.installer"
