@@ -14,7 +14,3 @@ steps:
 
   install jq:
     description: "install jq"
-    check:
-      operator: "equal to"
-      compareTo: 1
-      command: "jq version"

@@ -4,11 +4,14 @@ import com.thiyagu06.installer.Stage
 import picocli.CommandLine.Command
 
 
-@Command(name = "setup", description = ["runs setup part of stages in a pipeline Yaml."])
+@Command(
+    name = "setup",
+    description = ["runs setup setup in pipeline Yaml."],
+    mixinStandardHelpOptions = true
+)
 class SetupCommand : OptionsCommand(), Runnable {
 
     override fun run() {
-        run(OptionsCommand(), Stage.SETUP)
+        run(Stage.SETUP)
     }
-
 }

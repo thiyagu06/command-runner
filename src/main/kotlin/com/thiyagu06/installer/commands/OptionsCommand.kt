@@ -2,8 +2,10 @@ package com.thiyagu06.installer.commands
 
 import com.thiyagu06.installer.CommandRunnerException
 import com.thiyagu06.installer.Stage
-import com.thiyagu06.installer.reporter.StatusReporter
+import com.thiyagu06.installer.reporter.ConsoleReporter
+import com.thiyagu06.installer.reporter.StepStatusTracker
 import com.thiyagu06.installer.service.InitializerService
+import com.thiyagu06.installer.service.PipelineManager
 import com.thiyagu06.installer.service.StepsExecutor
 import picocli.CommandLine
 import picocli.CommandLine.Option
@@ -13,34 +15,19 @@ import kotlin.system.exitProcess
 
 open class OptionsCommand {
 
-    @Option(names = ["--pipeline", "-p"], description = ["absolute path of the pipeline yaml"])
-    private val pipeline: String? = null
+    @Option(names = ["--file", "-f"], required = true, description = ["absolute path of the pipeline yaml"])
+    var pipeline: String = ""
 
-    fun run(command: OptionsCommand, stage: Stage) {
+    fun run(stage: Stage) {
         try {
-            pipeline?.let {
-                val pipeFileYaml = getPipeline(it)
-                InitializerService.initializeInstallerDirectory()
-                StepsExecutor.runAllSteps(pipeFileYaml, stage)
-            } ?: let {
-                val commandLine = CommandLine(command)
-                commandLine.usage(System.out)
-                return
-            }
+            InitializerService.initializeInstallerDirectory()
+            val pipeFileYaml = PipelineManager.toPipeline(pipeline)
+            StepsExecutor.runAllSteps(pipeFileYaml, stage)
         } catch (exception: CommandRunnerException) {
-            StatusReporter.error(exception.message)
+            ConsoleReporter.error(exception.message)
             exitProcess(exception.exitCode)
+        } finally {
+            StepStatusTracker.printSummary()
         }
-    }
-
-    private fun getPipeline(location: String): File {
-        val pipelineFile = File(location)
-        if (pipelineFile.isFile.not() && pipelineFile.exists().not()) {
-            throw CommandRunnerException(
-                "could not find file at: ${pipelineFile.absolutePath}",
-                CommandLine.ExitCode.USAGE
-            )
-        }
-        return pipelineFile
     }
 }

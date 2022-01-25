@@ -10,6 +10,10 @@ import java.nio.file.Files
 
 object CommandExecutor {
 
+    init {
+        InitializerService.initializeTempDirectory()
+    }
+
     fun execute(command: Command): CommandExecutionResult {
         val commandExecutionResult = executeCommand(command.command)
         return when (commandExecutionResult.exitValue) {

@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.allopen") version "1.6.10"
     id("io.quarkus")
+    id("io.gitlab.arturbosch.detekt") version "1.17.1"
 }
 
 repositories {
@@ -21,6 +22,7 @@ dependencies {
     implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
     implementation("org.zeroturnaround:zt-exec:1.12")
+    implementation("de.vandermeer:asciitable:0.3.2")
     implementation("io.quarkus:quarkus-arc")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("org.assertj:assertj-core:3.22.0")

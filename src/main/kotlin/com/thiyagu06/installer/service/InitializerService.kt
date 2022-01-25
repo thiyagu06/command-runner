@@ -12,7 +12,7 @@ object InitializerService {
 
     private val userHomeDir: String = System.getProperty("user.home")
 
-    private val installerDir: Path = Paths.get(userHomeDir, ".dev-stack")
+    private val installerDir: Path = Paths.get(userHomeDir, ".command-runner")
 
     val tempDirectory: Path = Paths.get(installerDir.toString(), "temp")
 
@@ -23,6 +23,19 @@ object InitializerService {
             } catch (e: IOException) {
                 throw CommandRunnerException(
                     "Failed initializing .dev-stack directory.",
+                    CommandLine.ExitCode.SOFTWARE
+                )
+            }
+        }
+    }
+
+    fun initializeTempDirectory() {
+        if (!Files.exists(tempDirectory)) {
+            try {
+                Files.createDirectory(tempDirectory)
+            } catch (e: IOException) {
+                throw CommandRunnerException(
+                    "Failed initializing .temp directory.",
                     CommandLine.ExitCode.SOFTWARE
                 )
             }

@@ -9,14 +9,26 @@ import com.thiyagu06.installer.model.Pipeline
 import picocli.CommandLine
 import java.io.File
 
-object PipelineConverter {
+object PipelineManager {
     private val mapper = ObjectMapper(YAMLFactory()).apply { findAndRegisterModules() }
 
-    fun toPipeline(pipeLineYaml: File): Pipeline {
+    fun toPipeline(pipeLineLocation: String): Pipeline {
         try {
-            return mapper.readValue(pipeLineYaml)
+            val pipeLineFile = getPipeline(pipeLineLocation)
+            return mapper.readValue(pipeLineFile)
         } catch (exception: JsonProcessingException) {
             throw CommandRunnerException("could load pipeline definition", CommandLine.ExitCode.USAGE)
         }
+    }
+
+    private fun getPipeline(location: String): File {
+        val pipelineFile = File(location)
+        if (pipelineFile.isFile.not() && pipelineFile.exists().not()) {
+            throw CommandRunnerException(
+                "could not find file at: ${pipelineFile.absolutePath}",
+                CommandLine.ExitCode.USAGE
+            )
+        }
+        return pipelineFile
     }
 }
