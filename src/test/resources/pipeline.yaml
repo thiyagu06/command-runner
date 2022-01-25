@@ -6,10 +6,10 @@ steps:
     setup:
       - command: "gh --version"
         onFailure: "failed to check gh version"
-      - command: brew install --cask  gh
+      - command: "brew install --cask  gh"
         onFailure: "failed to install gh cli"
     tearDown:
-      - command: brew uninstall gh
+      - command: "brew uninstall gh"
         onFailure: "failed to uninstall gh cli"
 
   install jq:

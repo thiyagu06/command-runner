@@ -17,8 +17,8 @@ object CommandExecutor {
     fun execute(command: Command): CommandExecutionResult {
         val commandExecutionResult = executeCommand(command.command)
         return when (commandExecutionResult.exitValue) {
-            CommandLine.ExitCode.OK -> CommandExecutionResult.Success(1, commandExecutionResult.outputUTF8())
-            else -> CommandExecutionResult.Failure(0, commandExecutionResult.outputUTF8())
+            CommandLine.ExitCode.OK -> CommandExecutionResult.Success(commandExecutionResult.outputUTF8())
+            else -> CommandExecutionResult.Failure(commandExecutionResult.outputUTF8())
         }
     }
 

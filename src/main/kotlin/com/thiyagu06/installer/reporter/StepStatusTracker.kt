@@ -1,10 +1,8 @@
 package com.thiyagu06.installer.reporter
 
-import com.thiyagu06.installer.model.Emoji
 import com.thiyagu06.installer.model.StepExecutionStatus.FAILURE
 import com.thiyagu06.installer.model.StepExecutionStatus.SUCCESS
 import com.thiyagu06.installer.model.StepExecutionSummary
-import de.vandermeer.asciitable.AsciiTable
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -27,8 +25,8 @@ object StepStatusTracker {
     }
 
     fun printSummary() {
-        executionStatuses.forEach { _ ->
-            ConsoleReporter.printAnsi(Emoji.RED_X_MARK.value)
+        executionStatuses.forEach {
+            ConsoleReporter.printAnsi("${it.stepName} ${it.status.convertToEmoji().value}")
         }
     }
 }

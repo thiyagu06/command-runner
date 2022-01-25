@@ -1,8 +1,8 @@
 package com.thiyagu06.installer.model
 
-sealed class CommandExecutionResult(val exitCode:Int, val commandOutput:String)  {
+sealed class CommandExecutionResult(val commandOutput: String) {
 
-    class Success(exitCode:Int, commandOutput:String) : CommandExecutionResult(exitCode, commandOutput)
+    class Success(commandOutput: String) : CommandExecutionResult(commandOutput)
 
-    class Failure(exitCode: Int, commandOutput: String): CommandExecutionResult(exitCode, commandOutput)
+    class Failure(commandOutput: String) : CommandExecutionResult(commandOutput)
 }

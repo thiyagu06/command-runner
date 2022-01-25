@@ -6,8 +6,7 @@ import picocli.CommandLine.Command
 
 @Command(
     name = "setup",
-    description = ["runs setup setup in pipeline Yaml."],
-    mixinStandardHelpOptions = true
+    description = ["runs setup stages in pipeline Yaml."]
 )
 class SetupCommand : OptionsCommand(), Runnable {
 
