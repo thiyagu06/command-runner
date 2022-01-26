@@ -87,6 +87,6 @@ You can then execute your native executable with: `./build/command-runner-1.0.0-
 - [ ] redirect command output to console based on YAML property.
 - [ ] ability to specify regex to verify command output
 - [ ] add tests
-- [ ] GitHub action to create release for native OS
+- [ ] GitHub action to create release for native executables
 - [ ] improve README to how to add alias for command runner
 - [ ] create sample pipelines

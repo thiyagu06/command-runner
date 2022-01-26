@@ -9,7 +9,6 @@ import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
-import kotlin.time.ExperimentalTime
 
 object StepsExecutor {
 
@@ -21,7 +20,6 @@ object StepsExecutor {
         }
     }
 
-    @OptIn(ExperimentalTime::class)
     private fun runCommands(commands: List<Command>) {
         var recentFailedCommand: Command? = null
         for (command in commands) {
