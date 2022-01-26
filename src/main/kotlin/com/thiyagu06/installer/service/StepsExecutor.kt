@@ -2,57 +2,46 @@ package com.thiyagu06.installer.service
 
 import com.thiyagu06.installer.CommandRunnerException
 import com.thiyagu06.installer.Stage
-import com.thiyagu06.installer.model.Command
 import com.thiyagu06.installer.model.CommandExecutionResult
+import com.thiyagu06.installer.model.Command
 import com.thiyagu06.installer.model.Pipeline
 import com.thiyagu06.installer.reporter.ConsoleReporter
-import com.thiyagu06.installer.reporter.StepStatusTracker
-import picocli.CommandLine
-import java.io.File
+import com.thiyagu06.installer.reporter.StepStatusReporter
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
+import kotlin.time.ExperimentalTime
 
 object StepsExecutor {
 
     fun runAllSteps(pipeline: Pipeline, stage: Stage) {
+        ConsoleReporter.info("Running pipeline: ${pipeline.name} for stage: $stage, description: ${pipeline.description}")
         when (stage) {
-            Stage.SETUP -> runSetupSteps(pipeline)
-            Stage.TEARDOWN -> runTearDownSteps(pipeline)
+            Stage.SETUP -> runCommands(pipeline.steps.setup)
+            Stage.TEARDOWN -> runCommands(pipeline.steps.tearDown)
         }
     }
 
-    private fun runSetupSteps(pipeline: Pipeline) {
-        with(pipeline) {
-            ConsoleReporter.info("Running pipeline: $name, description=$description")
-            steps.forEach {
-                runStep(it.key, it.value.setup)
+    @OptIn(ExperimentalTime::class)
+    private fun runCommands(commands: List<Command>) {
+        commands.forEach {
+            val startTime = Instant.now(Clock.systemDefaultZone())
+            val result = CommandExecutor.execute(it.command)
+            val executionTime = Duration.between(startTime, Instant.now(Clock.systemDefaultZone()))
+            when (result) {
+                is CommandExecutionResult.Success -> {
+                    StepStatusReporter.onSuccess(it.name, executionTime, result.commandOutput)
+                }
+                is CommandExecutionResult.Failure -> {
+                    StepStatusReporter.onFailure(it.name, executionTime, result.commandOutput)
+                    if (it.abortIfFailed) {
+                        throw CommandRunnerException(
+                            "Failed to execute command: ${it.name}, output: ${result.commandOutput}",
+                            result.exitCode
+                        )
+                    }
+                }
             }
         }
-    }
-
-    private fun runStep(name: String, commands: List<Command>) {
-        ConsoleReporter.info("Running step: $name")
-        val startTime = Instant.now(Clock.systemDefaultZone())
-        commands.forEach { command ->
-            val result = CommandExecutor.execute(command)
-            if (result is CommandExecutionResult.Failure) {
-                StepStatusTracker.onFailure(
-                    name,
-                    Duration.between(startTime, Instant.now(Clock.systemDefaultZone())),
-                    result.commandOutput
-                )
-                ConsoleReporter.error("error when executing command: $command in stage:$name error: ${command.onFailure}")
-                throw CommandRunnerException(
-                    "error when executing stage:$name error: $command.onFailure",
-                    CommandLine.ExitCode.USAGE
-                )
-            }
-        }
-        StepStatusTracker.onSuccess(name, Duration.between(startTime, Instant.now(Clock.systemDefaultZone())))
-    }
-
-    private fun runTearDownSteps(pipeline: Pipeline) {
-        println("running tear down stage: ${pipeline.name}")
     }
 }

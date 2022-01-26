@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     kotlin("plugin.allopen") version "1.6.10"
     id("io.quarkus")
-    id("io.gitlab.arturbosch.detekt") version "1.17.1"
+    // id("io.gitlab.arturbosch.detekt") version "1.17.1"
 }
 
 repositories {
@@ -19,6 +19,7 @@ dependencies {
     implementation("io.quarkus:quarkus-picocli")
     implementation("io.quarkus:quarkus-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.yaml:snakeyaml:1.30")
     implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.+")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
     implementation("org.zeroturnaround:zt-exec:1.12")

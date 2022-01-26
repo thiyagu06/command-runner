@@ -1,6 +1,5 @@
 package com.thiyagu06.installer.service
 
-import com.thiyagu06.installer.model.Command
 import com.thiyagu06.installer.model.CommandExecutionResult
 import org.zeroturnaround.exec.ProcessExecutor
 import org.zeroturnaround.exec.ProcessResult
@@ -14,15 +13,15 @@ object CommandExecutor {
         InitializerService.initializeTempDirectory()
     }
 
-    fun execute(command: Command): CommandExecutionResult {
-        val commandExecutionResult = executeCommand(command.command)
-        return when (commandExecutionResult.exitValue) {
-            CommandLine.ExitCode.OK -> CommandExecutionResult.Success(commandExecutionResult.outputUTF8())
-            else -> CommandExecutionResult.Failure(commandExecutionResult.outputUTF8())
+    fun execute(command: String): CommandExecutionResult {
+        val result = runCommand(command)
+        return when (result.exitValue) {
+            CommandLine.ExitCode.OK -> CommandExecutionResult.Success(result.exitValue, result.outputUTF8())
+            else -> CommandExecutionResult.Failure(result.exitValue, result.outputUTF8())
         }
     }
 
-    private fun executeCommand(command: String): ProcessResult {
+    private fun runCommand(command: String): ProcessResult {
         val processExecutor = ProcessExecutor()
         val file: File = createExecutableFile(command)
         val list: List<String> = listOf(file.absolutePath)

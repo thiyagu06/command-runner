@@ -5,6 +5,6 @@ import java.time.Duration
 data class StepExecutionSummary(
     val stepName: String,
     val duration: Duration,
-    val message: String,
-    val status: StepExecutionStatus
+    val status: StepExecutionStatus,
+    val commandOutput: String
 )

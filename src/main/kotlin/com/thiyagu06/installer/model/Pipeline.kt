@@ -1,12 +1,34 @@
 package com.thiyagu06.installer.model
 
-data class Pipeline(val name: String, val description: String, val steps: Map<String, Step> = emptyMap())
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import io.quarkus.runtime.annotations.RegisterForReflection
 
 
-data class Step(
-    val description: String? = null,
-    val setup: List<Command> = emptyList(),
-    val tearDown: List<Command> = emptyList()
+@RegisterForReflection
+data class Command @JsonCreator constructor(
+    @JsonProperty("name")
+    val name: String,
+    @JsonProperty("command")
+    val command: String,
+    @JsonProperty("abortIfFailed")
+    val abortIfFailed: Boolean = true
 )
 
-data class Command(val command: String, val onFailure: String? = null)
+@RegisterForReflection
+data class Pipeline @JsonCreator constructor(
+    @JsonProperty("name")
+    val name: String,
+    @JsonProperty("description")
+    val description: String,
+    @JsonProperty("steps")
+    val steps: Step
+)
+
+@RegisterForReflection
+data class Step @JsonCreator constructor(
+    @JsonProperty("setup")
+    val setup: List<Command> = emptyList(),
+    @JsonProperty("tearDown")
+    val tearDown: List<Command> = emptyList()
+)

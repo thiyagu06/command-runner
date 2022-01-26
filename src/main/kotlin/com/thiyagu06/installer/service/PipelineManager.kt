@@ -10,14 +10,15 @@ import picocli.CommandLine
 import java.io.File
 
 object PipelineManager {
-    private val mapper = ObjectMapper(YAMLFactory()).apply { findAndRegisterModules() }
 
     fun toPipeline(pipeLineLocation: String): Pipeline {
+        val mapper = ObjectMapper(YAMLFactory()).apply { findAndRegisterModules() }
         try {
             val pipeLineFile = getPipeline(pipeLineLocation)
-            return mapper.readValue(pipeLineFile)
+            return mapper.readValue(pipeLineFile.inputStream())
         } catch (exception: JsonProcessingException) {
-            throw CommandRunnerException("could load pipeline definition", CommandLine.ExitCode.USAGE)
+            println(exception.message)
+            throw CommandRunnerException("could not load pipeline definition", CommandLine.ExitCode.USAGE)
         }
     }
 

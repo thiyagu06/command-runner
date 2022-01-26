@@ -1,20 +1,17 @@
 package com.thiyagu06.installer.reporter
 
-import com.thiyagu06.installer.model.Emoji
-import picocli.CommandLine
-
 object ConsoleReporter {
 
+    private const val ANSI_RED = "\u001B[31m"
+    private const val ANSI_RESET = "\u001B[0m"
+    private const val ANSI_PURPLE = "\u001B[35m"
 
     fun info(message: String) {
         println(message)
     }
 
     fun error(message: String) {
-        System.err.println("$message :(")
-    }
-
-    fun printAnsi(message: String) {
-        println(CommandLine.Help.Ansi.AUTO.string(message))
+        val ansiString = "$ANSI_PURPLE [ERROR] $ANSI_RED$message$ANSI_RESET"
+        println(ansiString)
     }
 }

@@ -3,7 +3,7 @@ package com.thiyagu06.installer.commands
 import com.thiyagu06.installer.CommandRunnerException
 import com.thiyagu06.installer.Stage
 import com.thiyagu06.installer.reporter.ConsoleReporter
-import com.thiyagu06.installer.reporter.StepStatusTracker
+import com.thiyagu06.installer.reporter.StepStatusReporter
 import com.thiyagu06.installer.service.InitializerService
 import com.thiyagu06.installer.service.PipelineManager
 import com.thiyagu06.installer.service.StepsExecutor
@@ -19,13 +19,13 @@ open class OptionsCommand {
     fun run(stage: Stage) {
         try {
             InitializerService.initializeInstallerDirectory()
-            val pipeFileYaml = PipelineManager.toPipeline(pipeline)
-            StepsExecutor.runAllSteps(pipeFileYaml, stage)
+            val pipelineYaml = PipelineManager.toPipeline(pipeline)
+            StepsExecutor.runAllSteps(pipelineYaml, stage)
         } catch (exception: CommandRunnerException) {
             ConsoleReporter.error(exception.message)
             exitProcess(exception.exitCode)
         } finally {
-            StepStatusTracker.printSummary()
+            StepStatusReporter.printSummary()
         }
     }
 }
