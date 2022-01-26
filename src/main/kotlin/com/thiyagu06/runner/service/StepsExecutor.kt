@@ -14,7 +14,7 @@ import kotlin.time.ExperimentalTime
 object StepsExecutor {
 
     fun runAllSteps(pipeline: Pipeline, stage: Stage) {
-        ConsoleReporter.info("Running pipeline: ${pipeline.name} for stage: $stage, description: ${pipeline.description}")
+        ConsoleReporter.header("Running pipeline: ${pipeline.name} for stage: $stage, description: ${pipeline.description}")
         when (stage) {
             Stage.SETUP -> runCommands(pipeline.steps.setup)
             Stage.TEARDOWN -> runCommands(pipeline.steps.tearDown)

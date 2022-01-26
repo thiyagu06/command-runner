@@ -3,8 +3,8 @@ package com.thiyagu06.runner.model
 import java.time.Duration
 
 data class StepExecutionResult(
-    val stepName: String,
+    val name: String,
     val duration: Duration,
-    val status: StepExecutionStatus,
+    val status: StepStatus,
     val commandOutput: String
 )

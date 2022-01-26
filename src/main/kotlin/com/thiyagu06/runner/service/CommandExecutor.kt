@@ -30,7 +30,7 @@ object CommandExecutor {
     }
 
     private fun createExecutableFile(command: String): File {
-        val file = File.createTempFile("stage_command", ".sh", InitializerService.tempDirectory.toFile())
+        val file = File.createTempFile("step_command", ".sh", InitializerService.tempDirectory.toFile())
         file.apply {
             setExecutable(true)
             setWritable(true)

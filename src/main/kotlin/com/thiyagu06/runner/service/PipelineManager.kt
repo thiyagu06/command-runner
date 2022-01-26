@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.thiyagu06.runner.CommandRunnerException
+import com.thiyagu06.runner.exception.CommandRunnerException
 import com.thiyagu06.runner.model.Pipeline
 import picocli.CommandLine
 import java.io.File
@@ -17,7 +17,6 @@ object PipelineManager {
             val pipeLineFile = getPipeline(pipeLineLocation)
             return mapper.readValue(pipeLineFile.inputStream())
         } catch (exception: JsonProcessingException) {
-            println(exception.message)
             throw CommandRunnerException("could not load pipeline definition", CommandLine.ExitCode.USAGE)
         }
     }

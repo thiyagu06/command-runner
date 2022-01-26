@@ -1,6 +1,6 @@
 package com.thiyagu06.runner.service
 
-import com.thiyagu06.runner.CommandRunnerException
+import com.thiyagu06.runner.exception.CommandRunnerException
 import picocli.CommandLine
 import java.io.IOException
 import java.nio.file.Files
@@ -21,7 +21,7 @@ object InitializerService {
                 Files.createDirectory(installerDir)
             } catch (e: IOException) {
                 throw CommandRunnerException(
-                    "Failed initializing .dev-stack directory.",
+                    "Failed initializing .command-runner directory.",
                     CommandLine.ExitCode.SOFTWARE
                 )
             }

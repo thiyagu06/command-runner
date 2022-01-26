@@ -1,5 +1,5 @@
 name: "Backend Developer"
-description: "Pipeline required for backed developers"
+description: "Install Pipeline required for backed developers"
 steps:
   setup:
     - name: "check gh version"

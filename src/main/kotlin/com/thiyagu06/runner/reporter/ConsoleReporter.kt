@@ -1,12 +1,14 @@
 package com.thiyagu06.runner.reporter
 
+import com.thiyagu06.runner.model.AnsiCodes.RED_BOLD
+import com.thiyagu06.runner.model.AnsiCodes.PURPLE
+import com.thiyagu06.runner.model.AnsiCodes.BOLD
+import com.thiyagu06.runner.model.AnsiCodes.RESET
+
 object ConsoleReporter {
 
-    private const val ANSI_RED = "\u001B[31m"
-    private const val ANSI_RESET = "\u001B[0m"
-    private const val ANSI_PURPLE = "\u001B[35m"
-
     fun header(message: String) {
+        println("$PURPLE [INFO] $BOLD $message $RESET")
     }
 
     fun info(message: String) {
@@ -14,7 +16,6 @@ object ConsoleReporter {
     }
 
     fun error(message: String) {
-        val ansiString = "$ANSI_PURPLE [ERROR] $ANSI_RED$message$ANSI_RESET"
-        println(ansiString)
+        println("$PURPLE [ERROR] $RED_BOLD $message $RESET")
     }
 }

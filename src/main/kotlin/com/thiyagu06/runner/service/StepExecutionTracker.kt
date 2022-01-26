@@ -1,9 +1,9 @@
 package com.thiyagu06.runner.service
 
-import com.thiyagu06.runner.model.StepExecutionStatus.FAILURE
-import com.thiyagu06.runner.model.StepExecutionStatus.SUCCESS
+import com.thiyagu06.runner.model.StepStatus.FAILURE
+import com.thiyagu06.runner.model.StepStatus.SUCCESS
 import com.thiyagu06.runner.model.StepExecutionResult
-import com.thiyagu06.runner.model.StepExecutionStatus.SKIPPED
+import com.thiyagu06.runner.model.StepStatus.SKIPPED
 import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
@@ -34,7 +34,7 @@ object StepExecutionTracker {
 
     fun printSummary() {
         executionStatuses.forEach {
-            ConsoleReporter.info("${it.stepName} ........... [ ${it.status.convertToEmoji().value} ]")
+            ConsoleReporter.info("${it.name} ........... [ ${it.status.convertToEmoji()} ]")
         }
     }
 
