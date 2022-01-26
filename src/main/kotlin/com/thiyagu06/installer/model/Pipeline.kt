@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.quarkus.runtime.annotations.RegisterForReflection
 
-
 @RegisterForReflection
 data class Command @JsonCreator constructor(
     @JsonProperty("name")

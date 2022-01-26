@@ -6,7 +6,7 @@ import com.thiyagu06.installer.model.StepExecutionSummary
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
-//TODO should this be singleton. What happens when running it in multiple tabs
+// TODO should this be singleton. What happens when running it in multiple tabs
 object StepStatusReporter {
 
     private val executionStatuses = CopyOnWriteArrayList<StepExecutionSummary>()
@@ -21,7 +21,7 @@ object StepStatusReporter {
     }
 
     fun onFailure(stepName: String, duration: Duration, commandOutput: String) {
-        ConsoleReporter.error("Failed to execute step: ${stepName}, output: ${getFailureReason(commandOutput)}")
+        ConsoleReporter.error("Failed to execute step: $stepName, output: ${getFailureReason(commandOutput)}")
         val summary = StepExecutionSummary(stepName, duration, FAILURE, commandOutput)
         track(summary)
     }

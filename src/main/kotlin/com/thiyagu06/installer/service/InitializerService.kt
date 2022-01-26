@@ -7,7 +7,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-
 object InitializerService {
 
     private val userHomeDir: String = System.getProperty("user.home")

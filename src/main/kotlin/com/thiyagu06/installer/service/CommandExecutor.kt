@@ -29,7 +29,6 @@ object CommandExecutor {
         return processExecutor.execute()
     }
 
-
     private fun createExecutableFile(command: String): File {
         val file = File.createTempFile("stage_command", ".sh", InitializerService.tempDirectory.toFile())
         file.apply {
@@ -42,7 +41,6 @@ object CommandExecutor {
         return file
     }
 
-
     private fun wrapCommandInShellFile(value: String): String =
         buildString {
             append("#!/bin/bash")
@@ -50,5 +48,4 @@ object CommandExecutor {
             append(value)
             append(System.lineSeparator())
         }
-
 }

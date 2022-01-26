@@ -3,7 +3,6 @@ package com.thiyagu06.installer.commands
 import com.thiyagu06.installer.Stage
 import picocli.CommandLine.Command
 
-
 @Command(
     name = "setup",
     description = ["runs setup stages in pipeline Yaml."]

@@ -10,7 +10,6 @@ import com.thiyagu06.installer.service.StepsExecutor
 import picocli.CommandLine.Option
 import kotlin.system.exitProcess
 
-
 open class OptionsCommand {
 
     @Option(names = ["--file", "-f"], required = true, description = ["absolute path of the pipeline yaml"])
