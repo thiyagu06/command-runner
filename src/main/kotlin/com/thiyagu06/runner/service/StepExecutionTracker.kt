@@ -1,28 +1,28 @@
-package com.thiyagu06.installer.reporter
+package com.thiyagu06.runner.service
 
-import com.thiyagu06.installer.model.StepExecutionStatus.FAILURE
-import com.thiyagu06.installer.model.StepExecutionStatus.SUCCESS
-import com.thiyagu06.installer.model.StepExecutionSummary
+import com.thiyagu06.runner.model.StepExecutionStatus.FAILURE
+import com.thiyagu06.runner.model.StepExecutionStatus.SUCCESS
+import com.thiyagu06.runner.model.StepExecutionResult
+import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
-// TODO should this be singleton. What happens when running it in multiple tabs
-object StepStatusReporter {
+class StepStatusExecutionTracker {
 
-    private val executionStatuses = CopyOnWriteArrayList<StepExecutionSummary>()
+    private val executionStatuses = CopyOnWriteArrayList<StepExecutionResult>()
 
-    private fun track(stepsSummary: StepExecutionSummary) {
-        executionStatuses.addIfAbsent(stepsSummary)
+    private fun track(stepsResult: StepExecutionResult) {
+        executionStatuses.addIfAbsent(stepsResult)
     }
 
     fun onSuccess(stepName: String, duration: Duration, commandOutput: String) {
-        val summary = StepExecutionSummary(stepName, duration, SUCCESS, commandOutput)
+        val summary = StepExecutionResult(stepName, duration, SUCCESS, commandOutput)
         track(summary)
     }
 
     fun onFailure(stepName: String, duration: Duration, commandOutput: String) {
         ConsoleReporter.error("Failed to execute step: $stepName, output: ${getFailureReason(commandOutput)}")
-        val summary = StepExecutionSummary(stepName, duration, FAILURE, commandOutput)
+        val summary = StepExecutionResult(stepName, duration, FAILURE, commandOutput)
         track(summary)
     }
 
