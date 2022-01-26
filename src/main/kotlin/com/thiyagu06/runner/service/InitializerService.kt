@@ -1,6 +1,6 @@
-package com.thiyagu06.installer.service
+package com.thiyagu06.runner.service
 
-import com.thiyagu06.installer.CommandRunnerException
+import com.thiyagu06.runner.CommandRunnerException
 import picocli.CommandLine
 import java.io.IOException
 import java.nio.file.Files

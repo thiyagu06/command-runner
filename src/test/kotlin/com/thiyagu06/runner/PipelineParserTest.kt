@@ -1,7 +1,7 @@
-package com.thiyagu06.installer
+package com.thiyagu06.runner
 
-import com.thiyagu06.installer.model.Pipeline
-import com.thiyagu06.installer.service.PipelineManager
+import com.thiyagu06.runner.model.Pipeline
+import com.thiyagu06.runner.service.PipelineManager
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.nio.file.Paths

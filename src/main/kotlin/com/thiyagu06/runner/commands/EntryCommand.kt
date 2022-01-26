@@ -1,4 +1,4 @@
-package com.thiyagu06.installer.commands
+package com.thiyagu06.runner.commands
 
 import io.quarkus.picocli.runtime.annotations.TopCommand
 import picocli.CommandLine

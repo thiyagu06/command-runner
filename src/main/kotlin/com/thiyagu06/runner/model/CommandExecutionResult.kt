@@ -1,4 +1,4 @@
-package com.thiyagu06.installer.model
+package com.thiyagu06.runner.model
 
 sealed class CommandExecutionResult(val exitCode: Int, val commandOutput: String) {
 

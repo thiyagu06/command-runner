@@ -1,6 +1,6 @@
-package com.thiyagu06.installer.service
+package com.thiyagu06.runner.service
 
-import com.thiyagu06.installer.model.CommandExecutionResult
+import com.thiyagu06.runner.model.CommandExecutionResult
 import org.zeroturnaround.exec.ProcessExecutor
 import org.zeroturnaround.exec.ProcessResult
 import picocli.CommandLine

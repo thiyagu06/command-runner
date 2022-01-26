@@ -1,4 +1,4 @@
-package com.thiyagu06.installer.reporter
+package com.thiyagu06.runner.reporter
 
 object ConsoleReporter {
 

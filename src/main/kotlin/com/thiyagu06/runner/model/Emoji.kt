@@ -1,4 +1,4 @@
-package com.thiyagu06.installer.model
+package com.thiyagu06.runner.model
 
 enum class Emoji(val value: String) {
     GREEN_CHECK_MARK("\u2705"),

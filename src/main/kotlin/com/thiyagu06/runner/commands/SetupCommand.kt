@@ -1,6 +1,6 @@
-package com.thiyagu06.installer.commands
+package com.thiyagu06.runner.commands
 
-import com.thiyagu06.installer.Stage
+import com.thiyagu06.runner.Stage
 import picocli.CommandLine.Command
 
 @Command(

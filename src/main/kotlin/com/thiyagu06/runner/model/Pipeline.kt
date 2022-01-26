@@ -1,4 +1,4 @@
-package com.thiyagu06.installer.model
+package com.thiyagu06.runner.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty

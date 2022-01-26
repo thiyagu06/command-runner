@@ -3,11 +3,12 @@ package com.thiyagu06.runner.service
 import com.thiyagu06.runner.model.StepExecutionStatus.FAILURE
 import com.thiyagu06.runner.model.StepExecutionStatus.SUCCESS
 import com.thiyagu06.runner.model.StepExecutionResult
+import com.thiyagu06.runner.model.StepExecutionStatus.SKIPPED
 import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
-class StepStatusExecutionTracker {
+class StepExecutionTracker {
 
     private val executionStatuses = CopyOnWriteArrayList<StepExecutionResult>()
 
@@ -25,6 +26,13 @@ class StepStatusExecutionTracker {
         val summary = StepExecutionResult(stepName, duration, FAILURE, commandOutput)
         track(summary)
     }
+
+    fun onSkipped(stepName: String) {
+        val summary = StepExecutionResult(stepName, Duration.ZERO, SKIPPED, "")
+        track(summary)
+    }
+
+    fun hasStep(stepName: String) = executionStatuses.any { it.stepName == stepName }
 
     fun printSummary() {
         executionStatuses.forEach {

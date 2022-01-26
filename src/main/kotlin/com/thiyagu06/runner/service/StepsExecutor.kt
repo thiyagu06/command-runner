@@ -1,12 +1,11 @@
-package com.thiyagu06.installer.service
+package com.thiyagu06.runner.service
 
-import com.thiyagu06.installer.CommandRunnerException
-import com.thiyagu06.installer.Stage
-import com.thiyagu06.installer.model.CommandExecutionResult
-import com.thiyagu06.installer.model.Command
-import com.thiyagu06.installer.model.Pipeline
-import com.thiyagu06.installer.reporter.ConsoleReporter
-import com.thiyagu06.installer.reporter.StepStatusReporter
+import com.thiyagu06.runner.CommandRunnerException
+import com.thiyagu06.runner.Stage
+import com.thiyagu06.runner.model.Command
+import com.thiyagu06.runner.model.CommandExecutionResult
+import com.thiyagu06.runner.model.Pipeline
+import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
@@ -24,16 +23,17 @@ object StepsExecutor {
 
     @OptIn(ExperimentalTime::class)
     private fun runCommands(commands: List<Command>) {
+        val stepExecutionTracker = StepExecutionTracker()
         commands.forEach {
             val startTime = Instant.now(Clock.systemDefaultZone())
             val result = CommandExecutor.execute(it.command)
             val executionTime = Duration.between(startTime, Instant.now(Clock.systemDefaultZone()))
             when (result) {
                 is CommandExecutionResult.Success -> {
-                    StepStatusReporter.onSuccess(it.name, executionTime, result.commandOutput)
+                    stepExecutionTracker.onSuccess(it.name, executionTime, result.commandOutput)
                 }
                 is CommandExecutionResult.Failure -> {
-                    StepStatusReporter.onFailure(it.name, executionTime, result.commandOutput)
+                    stepExecutionTracker.onFailure(it.name, executionTime, result.commandOutput)
                     if (it.abortIfFailed) {
                         throw CommandRunnerException(
                             "Failed to execute command: ${it.name}, output: ${result.commandOutput}",
@@ -43,5 +43,6 @@ object StepsExecutor {
                 }
             }
         }
+        stepExecutionTracker.printSummary()
     }
 }
