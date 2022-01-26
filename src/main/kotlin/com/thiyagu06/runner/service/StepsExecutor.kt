@@ -1,9 +1,9 @@
 package com.thiyagu06.runner.service
 
-import com.thiyagu06.runner.CommandRunnerException
 import com.thiyagu06.runner.Stage
 import com.thiyagu06.runner.model.Command
-import com.thiyagu06.runner.model.CommandExecutionResult
+import com.thiyagu06.runner.model.CommandExecutionResult.Failure
+import com.thiyagu06.runner.model.CommandExecutionResult.Success
 import com.thiyagu06.runner.model.Pipeline
 import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Clock
@@ -23,26 +23,23 @@ object StepsExecutor {
 
     @OptIn(ExperimentalTime::class)
     private fun runCommands(commands: List<Command>) {
-        val stepExecutionTracker = StepExecutionTracker()
-        commands.forEach {
+        var recentFailedCommand: Command? = null
+        for (command in commands) {
+            if (recentFailedCommand != null && recentFailedCommand.abortIfFailed) {
+                StepExecutionTracker.onSkipped(command.name)
+                continue
+            }
             val startTime = Instant.now(Clock.systemDefaultZone())
-            val result = CommandExecutor.execute(it.command)
+            val result = CommandExecutor.execute(command.command)
             val executionTime = Duration.between(startTime, Instant.now(Clock.systemDefaultZone()))
             when (result) {
-                is CommandExecutionResult.Success -> {
-                    stepExecutionTracker.onSuccess(it.name, executionTime, result.commandOutput)
-                }
-                is CommandExecutionResult.Failure -> {
-                    stepExecutionTracker.onFailure(it.name, executionTime, result.commandOutput)
-                    if (it.abortIfFailed) {
-                        throw CommandRunnerException(
-                            "Failed to execute command: ${it.name}, output: ${result.commandOutput}",
-                            result.exitCode
-                        )
-                    }
+                is Success -> StepExecutionTracker.onSuccess(command.name, executionTime, result.commandOutput)
+                is Failure -> {
+                    recentFailedCommand = command
+                    StepExecutionTracker.onFailure(command.name, executionTime, result.commandOutput)
                 }
             }
         }
-        stepExecutionTracker.printSummary()
+        StepExecutionTracker.printSummary()
     }
 }

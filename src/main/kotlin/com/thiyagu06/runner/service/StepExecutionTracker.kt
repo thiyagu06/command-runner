@@ -8,7 +8,7 @@ import com.thiyagu06.runner.reporter.ConsoleReporter
 import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
-class StepExecutionTracker {
+object StepExecutionTracker {
 
     private val executionStatuses = CopyOnWriteArrayList<StepExecutionResult>()
 
@@ -31,8 +31,6 @@ class StepExecutionTracker {
         val summary = StepExecutionResult(stepName, Duration.ZERO, SKIPPED, "")
         track(summary)
     }
-
-    fun hasStep(stepName: String) = executionStatuses.any { it.stepName == stepName }
 
     fun printSummary() {
         executionStatuses.forEach {

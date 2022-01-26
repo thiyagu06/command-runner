@@ -6,6 +6,9 @@ object ConsoleReporter {
     private const val ANSI_RESET = "\u001B[0m"
     private const val ANSI_PURPLE = "\u001B[35m"
 
+    fun header(message: String) {
+    }
+
     fun info(message: String) {
         println(message)
     }
