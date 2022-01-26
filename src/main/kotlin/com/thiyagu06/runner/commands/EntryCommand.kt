@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 @TopCommand
 @CommandLine.Command(
+    name = "command-runner",
     mixinStandardHelpOptions = true,
     subcommands = [SetupCommand::class, TearDownCommand::class],
     description = ["CLI for executing shell commands"]
