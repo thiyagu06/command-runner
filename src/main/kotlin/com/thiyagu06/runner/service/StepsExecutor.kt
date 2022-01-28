@@ -11,23 +11,26 @@ import java.time.Instant
 object StepsExecutor {
 
     fun runSteps(commands: List<Command>, settings: RunnerGlobalSettings) {
-        var lastFailedCommand: Command? = null
+        val executedCommands: MutableList<Command> = mutableListOf()
         for (command in commands) {
-            if (lastFailedCommand?.abortIfFailed == true) {
-                StepExecutionTracker.onSkipped(command.name)
-                continue
-            }
             val startTime = Instant.now(Clock.systemDefaultZone())
             val result = CommandExecutor.execute(command.command)
             val executionTime = Duration.between(startTime, Instant.now(Clock.systemDefaultZone()))
+            executedCommands.add(command)
             when (result) {
-                is Success -> StepExecutionTracker.onSuccess(command.name, executionTime, result.commandOutput, settings.printStepResult)
+                is Success -> StepExecutionTracker.onSuccess(
+                    command.name,
+                    executionTime,
+                    result.commandOutput,
+                    settings.printStepResult
+                )
                 is Failure -> {
-                    lastFailedCommand = command
                     StepExecutionTracker.onFailure(command.name, executionTime, result.commandOutput)
+                    if (command.abortIfFailed) break
                 }
             }
         }
+        commands.minus(executedCommands).forEach { StepExecutionTracker.onSkipped(it.name) }
         StepExecutionTracker.printSummary()
     }
 }
