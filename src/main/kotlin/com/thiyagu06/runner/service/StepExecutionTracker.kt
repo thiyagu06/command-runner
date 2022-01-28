@@ -34,7 +34,7 @@ object StepExecutionTracker {
 
     fun printSummary() {
         executionStatuses.forEach {
-            ConsoleReporter.info("${it.name} ........... [ ${it.status.convertToEmoji()} ]")
+            ConsoleReporter.info("${it.name} ........... [ ${it.status.convertToAnsiCode()} ]")
         }
     }
 

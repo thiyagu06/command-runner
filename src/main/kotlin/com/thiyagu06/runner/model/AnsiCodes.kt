@@ -9,4 +9,6 @@ object AnsiCodes {
     const val GREEN_CHECK_MARK = "\u2705"
     const val RED_X_MARK = "\u274C"
     const val BLUE_SKIPPED_MARK = "$BLUE_BOLD⦰$RESET"
+    const val YELLOW = "\u001B[33m"
+    const val BLUE = "\u001B[34m"
 }

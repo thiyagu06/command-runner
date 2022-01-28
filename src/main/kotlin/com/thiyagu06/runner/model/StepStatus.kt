@@ -7,7 +7,7 @@ import com.thiyagu06.runner.model.AnsiCodes.BLUE_SKIPPED_MARK
 enum class StepStatus {
     SUCCESS, FAILURE, SKIPPED;
 
-    fun convertToEmoji(): String {
+    fun convertToAnsiCode(): String {
         return when (this) {
             SUCCESS -> GREEN_CHECK_MARK
             FAILURE -> RED_X_MARK

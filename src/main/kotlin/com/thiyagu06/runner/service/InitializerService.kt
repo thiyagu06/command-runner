@@ -15,7 +15,7 @@ object InitializerService {
 
     val tempDirectory: Path = Paths.get(installerDir.toString(), "temp")
 
-    fun initializeInstallerDirectory() {
+    fun initGlobalDirectory() {
         if (!Files.exists(installerDir)) {
             try {
                 Files.createDirectory(installerDir)
@@ -28,7 +28,7 @@ object InitializerService {
         }
     }
 
-    fun initializeTempDirectory() {
+    fun initTempDirectory() {
         if (!Files.exists(tempDirectory)) {
             try {
                 Files.createDirectory(tempDirectory)

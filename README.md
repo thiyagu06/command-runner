@@ -83,7 +83,7 @@ You can then execute your native executable with: `./build/command-runner-1.0.0-
 
 ## TODO
 
-- [ ] ability to run specific step in the stage
+- [x] ability to run specific step in the stage
 - [ ] redirect command output to console based on YAML property.
 - [ ] ability to specify regex to verify command output
 - [ ] add tests

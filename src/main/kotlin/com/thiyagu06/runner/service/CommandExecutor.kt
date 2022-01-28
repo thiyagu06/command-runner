@@ -10,7 +10,7 @@ import java.nio.file.Files
 object CommandExecutor {
 
     init {
-        InitializerService.initializeTempDirectory()
+        InitializerService.initTempDirectory()
     }
 
     fun execute(command: String): CommandExecutionResult {
