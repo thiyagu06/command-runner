@@ -2,9 +2,6 @@ name: "Backend Developer"
 description: "Install Pipeline required for backed developers"
 steps:
   setup:
-    - name: "check gh version"
-      command: "gh --version"
-      abortIfFailed: false
     - name: "check docker version"
       command: "docker --version"
       abortIfFailed: true

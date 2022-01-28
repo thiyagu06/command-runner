@@ -16,8 +16,9 @@ object StepExecutionTracker {
         executionStatuses.addIfAbsent(stepsResult)
     }
 
-    fun onSuccess(stepName: String, duration: Duration, commandOutput: String) {
+    fun onSuccess(stepName: String, duration: Duration, commandOutput: String, shouldPrint: Boolean) {
         val summary = StepExecutionResult(stepName, duration, SUCCESS, commandOutput)
+        if (shouldPrint) ConsoleReporter.info("successfully executed step: $stepName output: $commandOutput")
         track(summary)
     }
 

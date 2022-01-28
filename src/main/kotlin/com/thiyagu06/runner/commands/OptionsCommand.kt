@@ -3,6 +3,7 @@ package com.thiyagu06.runner.commands
 import com.thiyagu06.runner.Stage
 import com.thiyagu06.runner.exception.StepNotFoundException
 import com.thiyagu06.runner.model.Command
+import com.thiyagu06.runner.model.RunnerGlobalSettings
 import com.thiyagu06.runner.model.Pipeline
 import com.thiyagu06.runner.reporter.ConsoleReporter
 import com.thiyagu06.runner.service.InitializerService
@@ -19,6 +20,14 @@ open class OptionsCommand {
     @Option(names = ["--step", "-s"], required = false, description = ["run the specific step from the pipeline yaml"])
     var stepName: String? = null
 
+    @Option(
+        names = ["--no-printOutput", "--no-p"],
+        required = false,
+        description = ["whether to print the output of each step to console"],
+        negatable = true
+    )
+    var printOutput: Boolean = true
+
     private val canExecuteCommand: (Command, String) -> Boolean = { command, compareTo -> compareTo == command.name }
 
     fun run(stage: Stage) {
@@ -26,7 +35,7 @@ open class OptionsCommand {
         val pipelineYaml = PipelineManager.toPipeline(pipeline)
         val commandsToRun = getCommands(pipelineYaml, stage)
         ConsoleReporter.header("Running pipeline: ${pipelineYaml.name} for stage: $stage, description: ${pipelineYaml.description}")
-        StepsExecutor.runSteps(commandsToRun)
+        StepsExecutor.runSteps(commandsToRun, RunnerGlobalSettings(printOutput))
     }
 
     private fun getCommands(pipeline: Pipeline, stage: Stage): List<Command> {
