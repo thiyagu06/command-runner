@@ -4,10 +4,10 @@ steps:
   setup:
     - name: "check docker version"
       command: "docker --version"
-      abortIfFailed: true
+      continueOnFail: true
     - name: "check java version"
       command: "java --version"
-      abortIfFailed: false
+      continueOnFail: false
   tearDown:
     - name: "check version"
       command: "gh --version"

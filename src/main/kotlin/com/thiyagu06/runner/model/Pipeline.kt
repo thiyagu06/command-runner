@@ -10,8 +10,8 @@ data class Command @JsonCreator constructor(
     val name: String,
     @JsonProperty("command")
     val command: String,
-    @JsonProperty("abortIfFailed")
-    val abortIfFailed: Boolean = true
+    @JsonProperty("continueOnFail")
+    val continueOnFail: Boolean = false
 )
 
 @RegisterForReflection

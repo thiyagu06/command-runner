@@ -2,34 +2,33 @@ package com.thiyagu06.runner.service
 
 import com.thiyagu06.runner.model.StepStatus.FAILURE
 import com.thiyagu06.runner.model.StepStatus.SUCCESS
-import com.thiyagu06.runner.model.StepExecutionResult
+import com.thiyagu06.runner.model.StepExecutionSummary
 import com.thiyagu06.runner.model.StepStatus.SKIPPED
 import com.thiyagu06.runner.reporter.ConsoleReporter
-import java.time.Duration
 import java.util.concurrent.CopyOnWriteArrayList
 
 object StepExecutionTracker {
 
-    private val executionStatuses = CopyOnWriteArrayList<StepExecutionResult>()
+    private val executionStatuses = CopyOnWriteArrayList<StepExecutionSummary>()
 
-    private fun track(stepsResult: StepExecutionResult) {
-        executionStatuses.addIfAbsent(stepsResult)
+    private fun track(stepsSummary: StepExecutionSummary) {
+        executionStatuses.addIfAbsent(stepsSummary)
     }
 
-    fun onSuccess(stepName: String, duration: Duration, commandOutput: String, shouldPrint: Boolean) {
-        val summary = StepExecutionResult(stepName, duration, SUCCESS, commandOutput)
+    fun onSuccess(stepName: String, commandOutput: String, shouldPrint: Boolean) {
+        val summary = StepExecutionSummary(stepName, SUCCESS, commandOutput)
         if (shouldPrint) ConsoleReporter.info("successfully executed step: $stepName output: $commandOutput")
         track(summary)
     }
 
-    fun onFailure(stepName: String, duration: Duration, commandOutput: String) {
+    fun onFailure(stepName: String, commandOutput: String) {
         ConsoleReporter.error("Failed to execute step: $stepName, output: ${getFailureReason(commandOutput)}")
-        val summary = StepExecutionResult(stepName, duration, FAILURE, commandOutput)
+        val summary = StepExecutionSummary(stepName, FAILURE, commandOutput)
         track(summary)
     }
 
     fun onSkipped(stepName: String) {
-        val summary = StepExecutionResult(stepName, Duration.ZERO, SKIPPED, "")
+        val summary = StepExecutionSummary(stepName, SKIPPED, "")
         track(summary)
     }
 

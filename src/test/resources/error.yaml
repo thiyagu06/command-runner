@@ -7,8 +7,8 @@ steps:
     abortIfFailed: false
       - name: "check docker version"
         command: "docker--version"
-        abortIfFailed: false
+        continueOnFail: false
   tearDown:
     - name: "check version"
       command: "gh --version"
-      abortIfFailed: false
+      continueOnFail: false

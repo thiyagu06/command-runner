@@ -17,6 +17,7 @@ object PipelineManager {
             val pipeLineFile = getPipeline(pipeLineLocation)
             return mapper.readValue(pipeLineFile.inputStream())
         } catch (exception: JsonProcessingException) {
+            println(exception.printStackTrace())
             throw CommandRunnerException("could not load pipeline definition", CommandLine.ExitCode.USAGE)
         }
     }
