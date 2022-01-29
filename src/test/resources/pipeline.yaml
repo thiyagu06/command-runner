@@ -1,11 +1,15 @@
 name: "Backend Developer"
-description: "Pipeline required for backed developers"
+description: "Install Pipeline required for backed developers"
 steps:
   setup:
-    - name: "check gh version"
-      command: "gh --version"
     - name: "check docker version"
-      command: "docker--version"
+      command: "docker --version"
+      expectedOutput: "/*14.0.2"
+      failureMessage: "version mismatch"
+      continueOnFail: true
+    - name: "check java version"
+      command: "java --version"
+      continueOnFail: false
   tearDown:
     - name: "check version"
       command: "gh --version"

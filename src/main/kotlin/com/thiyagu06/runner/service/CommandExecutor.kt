@@ -1,6 +1,6 @@
 package com.thiyagu06.runner.service
 
-import com.thiyagu06.runner.model.CommandExecutionResult
+import com.thiyagu06.runner.model.CommandResult
 import org.zeroturnaround.exec.ProcessExecutor
 import org.zeroturnaround.exec.ProcessResult
 import picocli.CommandLine
@@ -13,11 +13,11 @@ object CommandExecutor {
         InitializerService.initTempDirectory()
     }
 
-    fun execute(command: String): CommandExecutionResult {
+    fun execute(command: String): CommandResult {
         val result = runCommand(command)
         return when (result.exitValue) {
-            CommandLine.ExitCode.OK -> CommandExecutionResult.Success(result.exitValue, result.outputUTF8())
-            else -> CommandExecutionResult.Failure(result.exitValue, result.outputUTF8())
+            CommandLine.ExitCode.OK -> CommandResult.Success(result.outputUTF8())
+            else -> CommandResult.Failure(result.outputUTF8())
         }
     }
 

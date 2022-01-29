@@ -1,6 +1,7 @@
 package com.thiyagu06.runner.service
 
 import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -12,12 +13,15 @@ import java.io.File
 object PipelineManager {
 
     fun toPipeline(pipeLineLocation: String): Pipeline {
-        val mapper = ObjectMapper(YAMLFactory()).apply { findAndRegisterModules() }
+        val mapper = ObjectMapper(YAMLFactory()).apply {
+            findAndRegisterModules()
+            enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS)
+        }
         try {
             val pipeLineFile = getPipeline(pipeLineLocation)
             return mapper.readValue(pipeLineFile.inputStream())
         } catch (exception: JsonProcessingException) {
-            println(exception.printStackTrace())
+            println(exception.message)
             throw CommandRunnerException("could not load pipeline definition", CommandLine.ExitCode.USAGE)
         }
     }

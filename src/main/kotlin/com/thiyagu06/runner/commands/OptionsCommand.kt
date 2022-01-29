@@ -2,7 +2,7 @@ package com.thiyagu06.runner.commands
 
 import com.thiyagu06.runner.Stage
 import com.thiyagu06.runner.exception.StepNotFoundException
-import com.thiyagu06.runner.model.Command
+import com.thiyagu06.runner.model.Step
 import com.thiyagu06.runner.model.RunnerGlobalSettings
 import com.thiyagu06.runner.model.Pipeline
 import com.thiyagu06.runner.reporter.ConsoleReporter
@@ -28,7 +28,7 @@ open class OptionsCommand {
     )
     var printOutput: Boolean = true
 
-    private val canExecuteCommand: (Command, String) -> Boolean = { command, compareTo -> compareTo == command.name }
+    private val canExecuteStep: (Step, String) -> Boolean = { step, compareTo -> compareTo == step.name }
 
     fun run(stage: Stage) {
         InitializerService.initGlobalDirectory()
@@ -38,13 +38,10 @@ open class OptionsCommand {
         StepsExecutor.runSteps(commandsToRun, RunnerGlobalSettings(printOutput))
     }
 
-    private fun getCommands(pipeline: Pipeline, stage: Stage): List<Command> {
-        val commands = when (stage) {
-            Stage.SETUP -> pipeline.steps.setup
-            Stage.TEARDOWN -> pipeline.steps.tearDown
-        }
+    private fun getCommands(pipeline: Pipeline, stage: Stage): List<Step> {
+        val commands = pipeline.steps.getValue(stage)
         return stepName?.let { step ->
-            commands.filter { canExecuteCommand(it, step) }.takeIf { it.isNotEmpty() }
+            commands.filter { canExecuteStep(it, step) }.takeIf { it.isNotEmpty() }
                 ?: throw StepNotFoundException(
                     "step: \"$step\" is not specified in the stage: $stage in pipeline: ${pipeline.name}",
                     stage,

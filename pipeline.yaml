@@ -4,6 +4,8 @@ steps:
   setup:
     - name: "check docker version"
       command: "docker --version"
+      expectedOutput: "20.10.5"
+      failureMessage: "version mismatch"
       continueOnFail: true
     - name: "check java version"
       command: "java --version"
@@ -11,4 +13,3 @@ steps:
   tearDown:
     - name: "check version"
       command: "gh --version"
-      abortIfFailed: false
