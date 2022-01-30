@@ -1,6 +1,6 @@
 name: "Backend Developer"
 description: "Pipeline to verify required software version for backed developers"
-steps:
+workflows:
   setup:
     - name: "check maven version"
       command: "mvn --version"

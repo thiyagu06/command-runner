@@ -2,7 +2,6 @@ package com.thiyagu06.runner.model
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.thiyagu06.runner.Stage
 import io.quarkus.runtime.annotations.RegisterForReflection
 
 @RegisterForReflection
@@ -27,6 +26,6 @@ data class Pipeline @JsonCreator constructor(
     val name: String,
     @JsonProperty("description")
     val description: String,
-    @JsonProperty("steps")
-    val steps: Map<Stage, List<Step>> = emptyMap()
+    @JsonProperty("workflows")
+    val workflows: Map<String, List<Step>> = emptyMap()
 )

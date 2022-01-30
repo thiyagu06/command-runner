@@ -15,9 +15,9 @@ class PipelineParserTest {
         val pipeline: Pipeline = PipelineManager.toPipeline(
             Paths.get("src", "test", "resources", "pipeline.yaml").toAbsolutePath().toString()
         )
-        assertThat(pipeline.steps.size).isEqualTo(2)
-        assertThat(pipeline.steps[Stage.SETUP]?.size).isEqualTo(2)
-        assertThat(pipeline.steps[Stage.TEARDOWN]?.size).isEqualTo(1)
+        assertThat(pipeline.workflows.size).isEqualTo(2)
+        assertThat(pipeline.workflows["setup"]?.size).isEqualTo(2)
+        assertThat(pipeline.workflows["tearDown"]?.size).isEqualTo(1)
     }
 
     @Test

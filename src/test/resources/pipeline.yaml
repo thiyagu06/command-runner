@@ -1,6 +1,6 @@
 name: "Backend Developer"
 description: "Install Pipeline required for backed developers"
-steps:
+workflows:
   setup:
     - name: "check docker version"
       command: "docker --version"

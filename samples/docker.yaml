@@ -1,6 +1,6 @@
-name: "run postgres"
+name: "Run postgres"
 description: "Pipeline to start/stop postgres docker instances"
-steps:
+workflows:
   setup:
     - name: "pull docker image"
       command: "docker pull postgres/latest"

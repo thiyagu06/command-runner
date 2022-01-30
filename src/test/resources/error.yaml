@@ -1,6 +1,6 @@
 name: "Backend Developer"
 description: "Pipeline required for backed developers"
-steps:
+workflows:
   setup:
     - name: "check gh version"
       command: "gh --version"

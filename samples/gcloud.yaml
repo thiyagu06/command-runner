@@ -1,6 +1,6 @@
-name: "Backend Developer"
-description: "Pipeline to verify required software version for backed developers"
-steps:
+name: "Devops Engineer"
+description: "Pipeline to install gcloud"
+workflows:
   setup:
     - name: "install gcloud"
       command: "brew cask install google-cloud-sdk"

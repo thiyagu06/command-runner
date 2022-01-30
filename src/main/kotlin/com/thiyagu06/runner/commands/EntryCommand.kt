@@ -12,7 +12,7 @@ import javax.inject.Inject
 @CommandLine.Command(
     name = "command-runner",
     mixinStandardHelpOptions = true,
-    subcommands = [SetupCommand::class, TearDownCommand::class],
+    subcommands = [PipeLineCommand::class],
     description = ["CLI for executing shell commands"]
 )
 @QuarkusMain
