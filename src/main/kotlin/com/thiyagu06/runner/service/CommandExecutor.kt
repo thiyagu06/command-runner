@@ -9,11 +9,8 @@ import java.nio.file.Files
 
 object CommandExecutor {
 
-    init {
-        InitializerService.initTempDirectory()
-    }
-
     fun execute(command: String, printResult: Boolean): CommandResult {
+        InitializerService.initTempDirectory()
         val executionListener = if (printResult) TrackCommandProgressListener(command) else NoopCommandExecutionLister
         executionListener.beforeExecution()
         val result = runCommand(command, printResult)
