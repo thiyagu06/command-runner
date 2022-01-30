@@ -1,7 +1,5 @@
 # Command Runner
 
-_**Warning:** Development is in progress._
-
 This project is a command line application to run your shell commands for simple workflows to more complex workflows on
 your local computer. Command Runner pipelines are written in YAML format. This project is inspired from the concept
 [circleci](https://circleci.com/).
@@ -27,32 +25,30 @@ various day-to-day tasks using command runner._
 Display the help to learn about the CLI
 
 ```shell script
-command-runner -- help
 Usage: command-runner [-hV] [COMMAND]
 CLI for executing shell commands
   -h, --help      Show this help message and exit.
   -V, --version   Print version information and exit.
 Commands:
-  setup     runs setup stages in pipeline Yaml.
-  teardown  runs teardown stage in pipeline Yaml.
+  pipeline  execute pipeline
 ```
 
-Run the setup stage of your pipeline
+Run the specific workflow in pipeline
 
 ```shell script
-command-runner setup -f <aboslute path to your pipeline yaml>
+command-runner pipeline -f <aboslute path to your pipeline yaml> -w <workflow name>
 ```
 
-Run the setup stage of your pipeline
+Run the specific step in your pipeline
 
 ```shell script
-command-runner teardown -f <aboslute path to your pipeline yaml>
+command-runner pipeline -f <aboslute path to your pipeline yaml> -w <workflow name> -s <step name>
 ```
 
 Disable printing output of each step execution
 
 ```shell script
-command-runner teardown -f <aboslute path to your pipeline yaml> --no-p
+command-runner pipeline -f <aboslute path to your pipeline yaml> -w <workflow name> -s <step name> --no-p
 ```
 
 ### Development
