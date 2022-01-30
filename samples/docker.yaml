@@ -1,0 +1,16 @@
+name: "run postgres"
+description: "Pipeline to start/stop postgres docker instances"
+steps:
+  setup:
+    - name: "pull docker image"
+      command: "docker pull postgres/latest"
+      continueOnFail: false
+    - name: "run postgres instance"
+      command: "docker run --name postgres_latest -e POSTGRES_PASSWORD=mysecretpassword -d postgres"
+      continueOnFail: false
+  tearDown:
+    - name: "check is postgres instance is running"
+      command: "docker ps --filter  name=postgres_latest"
+      continueOnFail: false
+    - name: "stop running postgres instance"
+      command: "docker stop postgres_latest"

@@ -4,17 +4,21 @@ _**Warning:** Development is in progress._
 
 This project is a command line application to run your shell commands for simple workflows to more complex workflows on
 your local computer. Command Runner pipelines are written in YAML format. This project is inspired from the concept
-of [terraform](https://www.terraform.io/) and [circleci](https://circleci.com/).
+[circleci](https://circleci.com/).
 
 ### Use cases
 
-* Command Runner can be used for setting up your local environment as the same way
-  as [terraform](https://www.terraform.io/) is used for setting up your cloud VMs. Instead of writing a long
-  how-to-setup guides for your new team members, define a set of commands needs to be executed in single YAML and use
-  Command runner to define the steps in the YAML file.
+* Command Runner can be used for setting up your [gcloud.yaml](samples/gcloud.yaml) local development environment.
+  Instead of writing a long how-to-setup guides for your new team members, define a set of commands needs to be executed
+  in single YAML and use Command runner to define the steps in the YAML file. You can control your local environment by
+  creating pipeline based on needs
 
-* Command Runner also provides a way to teardown your local environment the same way you have done for setup. Just
-  define your shell commands to removing your installation in the tearDown stage of your pipeline. easy, isn't it?
+* Command Runner also provides a way to teardown your[version.yaml](samples/docker.yaml) local environment the same way
+  you have done for setup. Just define your shell commands to removing your installation in the tearDown stage of your
+  pipeline. easy, isn't it?
+
+_**Warning:** sample pipelines are not fully tested. It's for providing some thoughts to user on how we can perform
+various day-to-day tasks using command runner._
 
 ### Usage
 
@@ -89,19 +93,9 @@ You can create a native executable using:
 ./gradlew build -Dquarkus.package.type=native
 ```
 
-You can then execute your native executable with: `./build/command-runner-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./build/command-runner-1.0.0-runner`
 
 ## Related Guides
 
 - Picocli ([guide](https://quarkus.io/guides/picocli)): Develop command line applications with Picocli
 - Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-
-## TODO
-
-- [x] ability to run specific step in the stage
-- [x] redirect command output to console based on CLI options.
-- [x] ability to specify regex to verify command output
-- [ ] add tests
-- [ ] GitHub action to create release for native executables
-- [x] improve README to how to add alias for command runner
-- [ ] create sample pipelines

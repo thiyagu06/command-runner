@@ -1,0 +1,10 @@
+name: "Backend Developer"
+description: "Pipeline to verify required software version for backed developers"
+steps:
+  setup:
+    - name: "install gcloud"
+      command: "brew cask install google-cloud-sdk"
+      continueOnFail: false
+  tearDown:
+    - name: "uninstall gcloud"
+      command: " find ~/Library/Caches/ -type d -name "google-cloud-sdk" | xargs rm -r"
