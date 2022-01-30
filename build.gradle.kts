@@ -13,6 +13,7 @@ repositories {
 val quarkusPlatformGroupId: String by project
 val quarkusPlatformArtifactId: String by project
 val quarkusPlatformVersion: String by project
+val runnerVersion: String by project
 
 dependencies {
     implementation(enforcedPlatform("$quarkusPlatformGroupId:$quarkusPlatformArtifactId:$quarkusPlatformVersion"))
@@ -29,8 +30,8 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
-group = "com.thiyagu06.installer"
-version = "1.0.0"
+group = "com.thiyagu06.runner"
+version = runnerVersion
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
