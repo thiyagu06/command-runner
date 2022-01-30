@@ -45,6 +45,12 @@ Run the setup stage of your pipeline
 command-runner teardown -f <aboslute path to your pipeline yaml>
 ```
 
+Disable printing output of each step execution
+
+```shell script
+command-runner teardown -f <aboslute path to your pipeline yaml> --no-p
+```
+
 ### Development
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
@@ -58,6 +64,15 @@ You can run your application in dev mode that enables live coding using:
 
 ```shell script
 ./gradlew quarkusDev
+```
+
+It produces the quarkus-run.jar file in the build/quarkus-app/ directory.
+
+The application is now runnable using java -jar build/quarkus-app/quarkus-run.jar. You should define an alias
+command-runner now:
+
+```shell script
+alias command-runner="java -jar target/quarkus-app/quarkus-run.jar"
 ```
 
 To seed the command line arguments, pass the -Dquarkus.args option:
@@ -88,5 +103,5 @@ You can then execute your native executable with: `./build/command-runner-1.0.0-
 - [x] ability to specify regex to verify command output
 - [ ] add tests
 - [ ] GitHub action to create release for native executables
-- [ ] improve README to how to add alias for command runner
+- [x] improve README to how to add alias for command runner
 - [ ] create sample pipelines
