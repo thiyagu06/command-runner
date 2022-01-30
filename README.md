@@ -85,7 +85,7 @@ You can then execute your native executable with: `./build/command-runner-1.0.0-
 
 - [x] ability to run specific step in the stage
 - [x] redirect command output to console based on CLI options.
-- [ ] ability to specify regex to verify command output
+- [x] ability to specify regex to verify command output
 - [ ] add tests
 - [ ] GitHub action to create release for native executables
 - [ ] improve README to how to add alias for command runner

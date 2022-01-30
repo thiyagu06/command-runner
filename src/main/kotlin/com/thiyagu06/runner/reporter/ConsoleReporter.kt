@@ -4,13 +4,13 @@ import com.thiyagu06.runner.Stage
 import com.thiyagu06.runner.model.AnsiCodes.YELLOW
 import com.thiyagu06.runner.model.AnsiCodes.RED_BOLD
 import com.thiyagu06.runner.model.AnsiCodes.PURPLE
-import com.thiyagu06.runner.model.AnsiCodes.BOLD
+import com.thiyagu06.runner.model.AnsiCodes.GREEN
 import com.thiyagu06.runner.model.AnsiCodes.RESET
 
 object ConsoleReporter {
 
     fun header(message: String) {
-        println("$PURPLE [INFO] $BOLD $message $RESET")
+        println("$PURPLE [INFO] $GREEN $message $RESET")
     }
 
     fun info(message: String) {
@@ -24,7 +24,7 @@ object ConsoleReporter {
     fun printSteps(steps: List<String>, stage: Stage) {
         info("The following steps are available in the stage : $stage")
         steps.forEachIndexed { index, stepName ->
-            info("${index + 1}.$YELLOW$stepName $RESET")
+            info("${index + 1}. $YELLOW$stepName $RESET")
         }
     }
 }

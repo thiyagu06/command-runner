@@ -2,14 +2,18 @@ name: "Backend Developer"
 description: "Install Pipeline required for backed developers"
 steps:
   setup:
+    - name: "check maven version"
+      command: "mvn --version"
     - name: "check docker version"
       command: "docker --version"
-      expectedOutput: "20.10.5"
-      failureMessage: "version mismatch"
+      expectedOutput: "20.10.3"
+      failureMessage: "version mismatch. expected version is 20.10.5"
       continueOnFail: true
     - name: "check java version"
-      command: "java --version"
+      command: "java--version"
       continueOnFail: false
+    - name: "check git version"
+      command: "git --version"
   tearDown:
     - name: "check version"
       command: "gh --version"

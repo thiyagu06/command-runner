@@ -2,6 +2,7 @@ package com.thiyagu06.runner.commands
 
 import com.thiyagu06.runner.Stage
 import com.thiyagu06.runner.exception.StepNotFoundException
+import com.thiyagu06.runner.model.AnsiCodes
 import com.thiyagu06.runner.model.Step
 import com.thiyagu06.runner.model.RunnerGlobalSettings
 import com.thiyagu06.runner.model.Pipeline
@@ -36,6 +37,10 @@ open class OptionsCommand {
         val commandsToRun = getCommands(pipelineYaml, stage)
         ConsoleReporter.header("Running pipeline: ${pipelineYaml.name} for stage: $stage, description: ${pipelineYaml.description}")
         StepsExecutor.runSteps(commandsToRun, RunnerGlobalSettings(printOutput))
+        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary for Stage: $stage --- ${AnsiCodes.RESET}")
+        StepsExecutor.printSummary()
+        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary end --- ${AnsiCodes.RESET}")
+        StepsExecutor.printStatusLegend()
     }
 
     private fun getCommands(pipeline: Pipeline, stage: Stage): List<Step> {

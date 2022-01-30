@@ -13,16 +13,20 @@ object CommandExecutor {
         InitializerService.initTempDirectory()
     }
 
-    fun execute(command: String): CommandResult {
-        val result = runCommand(command)
+    fun execute(command: String, printResult: Boolean): CommandResult {
+        val executionListener = if (printResult) TrackCommandProgressListener(command) else NoopCommandExecutionLister
+        executionListener.beforeExecution()
+        val result = runCommand(command, printResult)
+        executionListener.afterExecution()
         return when (result.exitValue) {
             CommandLine.ExitCode.OK -> CommandResult.Success(result.outputUTF8())
             else -> CommandResult.Failure(result.outputUTF8())
         }
     }
 
-    private fun runCommand(command: String): ProcessResult {
-        val processExecutor = ProcessExecutor()
+    private fun runCommand(command: String, printResult: Boolean): ProcessResult {
+        val processExecutor = ProcessExecutor().redirectError(System.err)
+        if (printResult) processExecutor.redirectOutput(System.out)
         val file: File = createExecutableFile(command)
         val list: List<String> = listOf(file.absolutePath)
         processExecutor.directory(InitializerService.tempDirectory.toFile()).command(list).readOutput(true)
