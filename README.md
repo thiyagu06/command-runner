@@ -2,7 +2,7 @@
 
 This project is a command line application to run your shell commands for simple workflows to more complex workflows on
 your local computer. Command Runner pipelines are written in YAML format. This project is inspired from the concept
-[circleci](https://circleci.com/).
+[circleci](https://circleci.com/) and [github actions](https://docs.github.com/en/actions).
 
 ### Use cases
 
@@ -11,7 +11,7 @@ your local computer. Command Runner pipelines are written in YAML format. This p
   in single YAML and use Command runner to define the steps in the YAML file. You can control your local environment by
   creating pipeline based on needs
 
-* Command Runner also provides a way to teardown your[version.yaml](samples/docker.yaml) local environment the same way
+* Command Runner also provides a way to teardown your [version.yaml](samples/docker.yaml) local environment the same way
   you have done for setup. Just define your shell commands to removing your installation in the tearDown stage of your
   pipeline. easy, isn't it?
 
@@ -90,6 +90,12 @@ You can create a native executable using:
 ```
 
 You can then execute your native executable with: `./build/command-runner-1.0.0-runner`
+
+## Releasing new version
+
+Github action is setup for releasing new artifacts. create a new release from  `releases` tab and native os executable will be built and uploaded by the GH action.
+
+
 
 ## Related Guides
 
