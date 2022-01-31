@@ -18,6 +18,8 @@ your local computer. Command Runner pipelines are written in YAML format. This p
 _**Warning:** sample pipelines are not fully tested. It's for providing some thoughts to user on how we can perform
 various day-to-day tasks using command runner._
 
+_**Warning:** native executables are tested only macos._
+
 ### Usage
 
 ### Available commands
