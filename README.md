@@ -74,7 +74,7 @@ The application is now runnable using java -jar build/quarkus-app/quarkus-run.ja
 command-runner now:
 
 ```shell script
-alias command-runner="java -jar target/quarkus-app/quarkus-run.jar"
+alias command-runner="java -jar build/quarkus-app/quarkus-run.jar"
 ```
 
 To seed the command line arguments, pass the -Dquarkus.args option:
