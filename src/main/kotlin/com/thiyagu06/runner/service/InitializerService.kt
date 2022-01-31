@@ -9,26 +9,31 @@ import java.nio.file.Paths
 
 object InitializerService {
 
-    private val userHomeDir: String = System.getProperty("user.home")
-
-    private val installerDir: Path = Paths.get(userHomeDir, ".command-runner")
-
-    val tempDirectory: Path = Paths.get(installerDir.toString(), "temp")
-
     fun initGlobalDirectory() {
+        val installerDir = getInstallerDirectory()
         if (!Files.exists(installerDir)) {
             try {
                 Files.createDirectory(installerDir)
             } catch (e: IOException) {
                 throw CommandRunnerException(
-                    "Failed initializing .command-runner directory.",
+                    "Failed initializing .command-runner directory. exception:${e.message}",
                     CommandLine.ExitCode.SOFTWARE
                 )
             }
         }
     }
 
+    private fun getInstallerDirectory(): Path {
+        val userHomeDir = System.getProperty("user.home")
+        return Paths.get(userHomeDir, ".command-runner")
+    }
+
+    fun getTempDirectory(): Path {
+        return Paths.get(getInstallerDirectory().toString(), "temp")
+    }
+
     fun initTempDirectory() {
+        val tempDirectory = getTempDirectory()
         if (!Files.exists(tempDirectory)) {
             try {
                 Files.createDirectory(tempDirectory)

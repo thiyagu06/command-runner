@@ -26,12 +26,12 @@ object CommandExecutor {
         if (printResult) processExecutor.redirectOutput(System.out)
         val file: File = createExecutableFile(command)
         val list: List<String> = listOf(file.absolutePath)
-        processExecutor.directory(InitializerService.tempDirectory.toFile()).command(list).readOutput(true)
+        processExecutor.directory(InitializerService.getTempDirectory().toFile()).command(list).readOutput(true)
         return processExecutor.execute()
     }
 
     private fun createExecutableFile(command: String): File {
-        val file = File.createTempFile("step_command", ".sh", InitializerService.tempDirectory.toFile())
+        val file = File.createTempFile("step_command", ".sh", InitializerService.getTempDirectory().toFile())
         file.apply {
             setExecutable(true)
             setWritable(true)
