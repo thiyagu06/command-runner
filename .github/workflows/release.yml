@@ -19,11 +19,6 @@ jobs:
           echo "VERSION=$(./gradlew properties -q | grep "runnerVersion:" | awk '{print $2}')" >> $GITHUB_ENV
       - name: 'build JAR'
         run: ./gradlew clean build
-      - name: 'upload artifacts'
-        uses: actions/upload-artifact@v2
-        with:
-          name: 'command-runner-${{env.VERSION}}-all.jar'
-          path: build/quarkus-app/quarkus-run.jar
       - name: 'upload release assert'
         uses: actions/upload-release-asset@v1
         env:
