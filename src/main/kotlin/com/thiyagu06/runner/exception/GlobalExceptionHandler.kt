@@ -14,7 +14,7 @@ class GlobalExceptionHandler : IExecutionExceptionHandler {
         cmd.err.println(cmd.colorScheme.errorText("Failed run the pipeline."))
         cmd.err.println(cmd.colorScheme.errorText(ex.message))
         return when (ex) {
-            is StepNotFoundException -> ex.exitCode.also { ConsoleReporter.printSteps(ex.availableSteps, ex.stage) }
+            is StepNotFoundException -> ex.exitCode.also { ConsoleReporter.printSteps(ex.availableSteps, ex.workflow) }
             is WorkFlowNotFoundException -> ex.exitCode.also { ConsoleReporter.printWorkflows(ex.availableWorkflows) }
             is CommandRunnerException -> ex.exitCode
             else -> CommandLine.ExitCode.USAGE

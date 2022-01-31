@@ -20,8 +20,8 @@ object ConsoleReporter {
         println("$PURPLE [ERROR] $RED_BOLD $message $RESET")
     }
 
-    fun printSteps(steps: List<String>, string: String) {
-        info("The following steps are available in the stage : $string")
+    fun printSteps(steps: List<String>, workflow: String) {
+        info("The following steps are available in the workflow : $workflow")
         steps.forEachIndexed { index, stepName ->
             info("${index + 1}. $YELLOW$stepName $RESET")
         }

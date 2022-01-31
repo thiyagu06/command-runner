@@ -30,7 +30,7 @@ class PipeLineCommand : Runnable {
         required = true,
         description = ["run the specific step from the pipeline yaml"]
     )
-    var string: String = ""
+    var workflow: String = ""
 
     @Option(
         names = ["--no-printOutput", "--no-p"],
@@ -45,22 +45,22 @@ class PipeLineCommand : Runnable {
     override fun run() {
         InitializerService.initGlobalDirectory()
         val pipelineYaml = PipelineManager.toPipeline(pipeline)
-        val commandsToRun = getCommands(pipelineYaml, string)
-        ConsoleReporter.header("Running pipeline: ${pipelineYaml.name} for stage: $string, description: ${pipelineYaml.description}")
+        val commandsToRun = getCommands(pipelineYaml, workflow)
+        ConsoleReporter.header("Running pipeline: ${pipelineYaml.name} for workflow: $workflow, description: ${pipelineYaml.description}")
         StepsExecutor.runSteps(commandsToRun, RunnerGlobalSettings(printOutput))
-        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary for Stage: $string --- ${AnsiCodes.RESET}")
+        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary for workflow: $workflow --- ${AnsiCodes.RESET}")
         StepsExecutor.printSummary()
-        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary end --- ${AnsiCodes.RESET}")
+        ConsoleReporter.info("${AnsiCodes.GREEN} ${AnsiCodes.PURPLE}---- Summary end ----- ${AnsiCodes.RESET}")
         StepsExecutor.printStatusLegend()
     }
 
-    private fun getCommands(pipeline: Pipeline, stage: String): List<Step> {
-        val steps = getStepsInWorkflow(stage, pipeline)
+    private fun getCommands(pipeline: Pipeline, workflow: String): List<Step> {
+        val steps = getStepsInWorkflow(workflow, pipeline)
         return stepName?.let { step ->
             steps.filter { canExecuteStep(it, step) }.takeIf { it.isNotEmpty() }
                 ?: throw StepNotFoundException(
-                    "step: \"$step\" is not specified in the stage: $stage in pipeline: ${pipeline.name}",
-                    stage,
+                    "step: \"$step\" is not specified in the workflow: $workflow in pipeline: ${pipeline.name}",
+                    workflow,
                     steps.map { it.name },
                     CommandLine.ExitCode.USAGE
                 )

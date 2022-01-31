@@ -12,7 +12,7 @@ your local computer. Command Runner pipelines are written in YAML format. This p
   creating pipeline based on needs
 
 * Command Runner also provides a way to teardown your [version.yaml](samples/docker.yaml) local environment the same way
-  you have done for setup. Just define your shell commands to removing your installation in the tearDown stage of your
+  you have done for setup. Just define your shell commands to removing your installation in the tearDown workflow of your
   pipeline. easy, isn't it?
 
 _**Warning:** sample pipelines are not fully tested. It's for providing some thoughts to user on how we can perform

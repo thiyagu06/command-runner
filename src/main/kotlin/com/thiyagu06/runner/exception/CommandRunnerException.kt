@@ -4,7 +4,7 @@ open class CommandRunnerException(override val message: String, val exitCode: In
 
 class StepNotFoundException(
     override val message: String,
-    val stage: String,
+    val workflow: String,
     val availableSteps: List<String>,
     exitCode: Int
 ) :
